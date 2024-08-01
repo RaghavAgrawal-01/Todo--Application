@@ -9,6 +9,9 @@ def home(request):
 # ====================================== TODO =========================================
 
 def todo(request):
+
+    user = request.user
+    print(user.username)
     
     todos = Todo.objects.filter(is_completed = False)
 
@@ -17,7 +20,8 @@ def todo(request):
     
     parameters = {
         "todos": todos, # isme koi bhi completed todo nhi h
-        "completed": completed
+        "completed": completed,
+        "user": user
     }
     
     return render(request, "todo.html", parameters) # isme jo parameter ja rha h usme bhi koi completed todo nhi h
@@ -100,5 +104,12 @@ def upload_profile(request):
         new_profile.save()
         
         return redirect("todo")
+    
+    
+    image = Profile.objects.get(id = 5)
+    
+    parameters = {
+        "image": image
+    }
     
     return render(request, "upload_profile.html")
